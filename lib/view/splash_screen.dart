@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'login_page.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
@@ -46,7 +48,7 @@ class SplashScreen extends StatelessWidget {
                       height: 56,
                       child: ElevatedButton(
                         onPressed: () {
-                          // TODO: Navigate to main app
+                          Get.to(() => const LoginPage());
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.white,
@@ -79,7 +81,7 @@ class SplashScreen extends StatelessWidget {
                         ),
                         GestureDetector(
                           onTap: () {
-                            // TODO: Navigate to login
+                            Get.to(() => const LoginPage());
                           },
                           child: const Text(
                             'Log in',
