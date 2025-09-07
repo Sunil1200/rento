@@ -7,14 +7,20 @@ class LoginController extends GetxController {
   final RxBool isPasswordVisible = false.obs;
   final RxString email = ''.obs;
   final RxString password = ''.obs;
+  final RxString firstName = ''.obs;
+  final RxString city = ''.obs;
   final RxString emailError = ''.obs;
   final RxString passwordError = ''.obs;
+  final RxString firstNameError = ''.obs;
+  final RxString cityError = ''.obs;
   final RxBool isLoginActive = false.obs;
   final RxBool isSignupActive = true.obs;
 
   // Text editing controllers
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final TextEditingController firstNameController = TextEditingController();
+  final TextEditingController cityController = TextEditingController();
 
   @override
   void onInit() {
@@ -22,12 +28,16 @@ class LoginController extends GetxController {
     // Listen to text changes to enable/disable login button
     emailController.addListener(_validateForm);
     passwordController.addListener(_validateForm);
+    firstNameController.addListener(_validateForm);
+    cityController.addListener(_validateForm);
   }
 
   @override
   void onClose() {
     emailController.dispose();
     passwordController.dispose();
+    firstNameController.dispose();
+    cityController.dispose();
     super.onClose();
   }
 
@@ -52,6 +62,8 @@ class LoginController extends GetxController {
   void _validateForm() {
     email.value = emailController.text;
     password.value = passwordController.text;
+    firstName.value = firstNameController.text;
+    city.value = cityController.text;
     
     // Enable login button if both fields have content and email is valid
     // bool isValid = email.value.isNotEmpty && 
@@ -66,6 +78,8 @@ class LoginController extends GetxController {
   void clearErrors() {
     emailError.value = '';
     passwordError.value = '';
+    firstNameError.value = '';
+    cityError.value = '';
   }
 
   // Validate email field
@@ -87,6 +101,28 @@ class LoginController extends GetxController {
       passwordError.value = 'Password must be at least 6 characters';
     } else {
       passwordError.value = '';
+    }
+  }
+
+  // Validate first name field
+  void validateFirstName() {
+    if (firstName.value.isEmpty) {
+      firstNameError.value = 'First name is required';
+    } else if (firstName.value.length < 2) {
+      firstNameError.value = 'First name must be at least 2 characters';
+    } else {
+      firstNameError.value = '';
+    }
+  }
+
+  // Validate city field
+  void validateCity() {
+    if (city.value.isEmpty) {
+      cityError.value = 'City is required';
+    } else if (city.value.length < 2) {
+      cityError.value = 'City must be at least 2 characters';
+    } else {
+      cityError.value = '';
     }
   }
 
@@ -148,9 +184,12 @@ class LoginController extends GetxController {
     // Validate fields
     validateEmail();
     validatePassword();
+    validateFirstName();
+    validateCity();
     
     // Check if there are any errors
-    if (emailError.value.isNotEmpty || passwordError.value.isNotEmpty) {
+    if (emailError.value.isNotEmpty || passwordError.value.isNotEmpty || 
+        firstNameError.value.isNotEmpty || cityError.value.isNotEmpty) {
       return;
     }
     

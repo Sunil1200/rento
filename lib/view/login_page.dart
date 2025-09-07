@@ -124,6 +124,24 @@ class LoginPage extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
+            // First Name Input Field (only for signup)
+            Obx(() => controller.isSignupActive.value 
+                ? _buildFirstNameField(controller)
+                : const SizedBox.shrink()),
+            
+            Obx(() => controller.isSignupActive.value 
+                ? const SizedBox(height: 20)
+                : const SizedBox.shrink()),
+            
+            // City Input Field (only for signup)
+            Obx(() => controller.isSignupActive.value 
+                ? _buildCityField(controller)
+                : const SizedBox.shrink()),
+            
+            Obx(() => controller.isSignupActive.value 
+                ? const SizedBox(height: 20)
+                : const SizedBox.shrink()),
+            
             // Email Input Field
             _buildEmailField(controller),
             
@@ -267,6 +285,116 @@ class LoginPage extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 8),
                 child: Text(
                   controller.passwordError.value,
+                  style: const TextStyle(
+                    color: Colors.red,
+                    fontSize: 12,
+                  ),
+                ),
+              )
+            : const SizedBox.shrink()),
+      ],
+    );
+  }
+
+  Widget _buildFirstNameField(LoginController controller) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        TextField(
+          controller: controller.firstNameController,
+          keyboardType: TextInputType.name,
+          textCapitalization: TextCapitalization.words,
+          decoration: InputDecoration(
+            hintText: 'Enter your first name',
+            prefixIcon: const Icon(
+              Icons.person_outline,
+              color: Color(0xFF673AB7),
+            ),
+            suffixIcon: Obx(() => controller.firstName.value.isNotEmpty && 
+                controller.firstNameError.value.isEmpty
+                ? const Icon(
+                    Icons.check_circle,
+                    color: Color(0xFF00E676),
+                  )
+                : const SizedBox.shrink()),
+            border: const UnderlineInputBorder(
+              borderSide: BorderSide(color: Colors.grey),
+            ),
+            focusedBorder: const UnderlineInputBorder(
+              borderSide: BorderSide(color: Color(0xFF673AB7)),
+            ),
+            errorBorder: const UnderlineInputBorder(
+              borderSide: BorderSide(color: Colors.red),
+            ),
+          ),
+          onChanged: (value) {
+            controller.firstName.value = value;
+            if (controller.firstNameError.value.isNotEmpty) {
+              controller.validateFirstName();
+            }
+          },
+          onSubmitted: (_) => controller.validateFirstName(),
+        ),
+        Obx(() => controller.firstNameError.value.isNotEmpty
+            ? Padding(
+                padding: const EdgeInsets.only(top: 8),
+                child: Text(
+                  controller.firstNameError.value,
+                  style: const TextStyle(
+                    color: Colors.red,
+                    fontSize: 12,
+                  ),
+                ),
+              )
+            : const SizedBox.shrink()),
+      ],
+    );
+  }
+
+  Widget _buildCityField(LoginController controller) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        TextField(
+          controller: controller.cityController,
+          keyboardType: TextInputType.text,
+          textCapitalization: TextCapitalization.words,
+          decoration: InputDecoration(
+            hintText: 'Enter your city',
+            prefixIcon: const Icon(
+              Icons.location_city_outlined,
+              color: Color(0xFF673AB7),
+            ),
+            suffixIcon: Obx(() => controller.city.value.isNotEmpty && 
+                controller.cityError.value.isEmpty
+                ? const Icon(
+                    Icons.check_circle,
+                    color: Color(0xFF00E676),
+                  )
+                : const SizedBox.shrink()),
+            border: const UnderlineInputBorder(
+              borderSide: BorderSide(color: Colors.grey),
+            ),
+            focusedBorder: const UnderlineInputBorder(
+              borderSide: BorderSide(color: Color(0xFF673AB7)),
+            ),
+            errorBorder: const UnderlineInputBorder(
+              borderSide: BorderSide(color: Colors.red),
+            ),
+          ),
+          onChanged: (value) {
+            controller.city.value = value;
+            if (controller.cityError.value.isNotEmpty) {
+              controller.validateCity();
+            }
+          },
+          onSubmitted: (_) => controller.validateCity(),
+        ),
+        Obx(() => controller.cityError.value.isNotEmpty
+            ? Padding(
+                padding: const EdgeInsets.only(top: 8),
+                child: Text(
+                  controller.cityError.value,
                   style: const TextStyle(
                     color: Colors.red,
                     fontSize: 12,
