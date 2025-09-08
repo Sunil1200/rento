@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../view/simple_map_page.dart';
 
 class LoginController extends GetxController {
   // Observable variables
@@ -147,20 +148,32 @@ class LoginController extends GetxController {
       // Simulate API call
       await Future.delayed(const Duration(seconds: 2));
       
+      // Demo credentials check
+      if (email.value == 'demo@rento.com' && password.value == 'demo123') {
+        // Show success message
+        Get.snackbar(
+          'Success',
+          'Login successful! Welcome to RENTO!',
+          snackPosition: SnackPosition.TOP,
+          backgroundColor: const Color(0xFF00E676),
+          colorText: Colors.white,
+        );
+        
+        // Navigate to home page
+        Get.offAll(() => const SimpleMapPage());
+      } else {
+        // Invalid credentials
+        Get.snackbar(
+          'Error',
+          'Invalid credentials. Use demo@rento.com / demo123',
+          snackPosition: SnackPosition.TOP,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      }
+      
       // TODO: Replace with actual API call
       // final response = await AuthService.login(email.value, password.value);
-      
-      // For now, just show success message
-      Get.snackbar(
-        'Success',
-        'Login successful!',
-        snackPosition: SnackPosition.TOP,
-        backgroundColor: const Color(0xFF00E676),
-        colorText: Colors.white,
-      );
-      
-      // TODO: Navigate to main app or dashboard
-      // Get.offAllNamed('/dashboard');
       
     } catch (e) {
       // Handle login error
@@ -200,17 +213,33 @@ class LoginController extends GetxController {
       // Simulate API call
       await Future.delayed(const Duration(seconds: 2));
       
+      // Demo signup - accept any valid form data
+      if (email.value.isNotEmpty && password.value.isNotEmpty && 
+          firstName.value.isNotEmpty && city.value.isNotEmpty) {
+        // Show success message
+        Get.snackbar(
+          'Success',
+          'Account created successfully! Welcome to RENTO!',
+          snackPosition: SnackPosition.TOP,
+          backgroundColor: const Color(0xFF00E676),
+          colorText: Colors.white,
+        );
+        
+        // Navigate to home page
+        Get.offAll(() => const SimpleMapPage());
+      } else {
+        // Invalid signup data
+        Get.snackbar(
+          'Error',
+          'Please fill in all required fields',
+          snackPosition: SnackPosition.TOP,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      }
+      
       // TODO: Replace with actual API call
       // final response = await AuthService.signup(email.value, password.value);
-      
-      // For now, just show success message
-      Get.snackbar(
-        'Success',
-        'Account created successfully!',
-        snackPosition: SnackPosition.TOP,
-        backgroundColor: const Color(0xFF00E676),
-        colorText: Colors.white,
-      );
       
     } catch (e) {
       // Handle signup error
