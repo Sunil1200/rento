@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../commanWidget/side_carousel_widget.dart';
 
 class SimpleMapPage extends StatefulWidget {
   const SimpleMapPage({super.key});
@@ -10,6 +11,7 @@ class SimpleMapPage extends StatefulWidget {
 
 class _SimpleMapPageState extends State<SimpleMapPage> {
   int _selectedIndex = 0;
+  bool _isCarouselExpanded = false;
   List<Map<String, dynamic>> _markers = [
     {
       'id': 'marker_1',
@@ -289,6 +291,93 @@ class _SimpleMapPageState extends State<SimpleMapPage> {
                     ),
                   ),
                 ],
+              ),
+            ),
+          ),
+          
+          // Carousel Panel
+          Positioned(
+            bottom: 100, // Above bottom navigation
+            left: 0,
+            right: 0,
+            child: GestureDetector(
+              onTap: () {
+                setState(() {
+                  _isCarouselExpanded = !_isCarouselExpanded;
+                });
+              },
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 300),
+                height: _isCarouselExpanded ? 400 : 80,
+                margin: const EdgeInsets.symmetric(horizontal: 16),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.1),
+                      blurRadius: 20,
+                      offset: const Offset(0, -5),
+                    ),
+                  ],
+                ),
+                child: Column(
+                  children: [
+                    // Handle bar
+                    Container(
+                      width: 40,
+                      height: 4,
+                      margin: const EdgeInsets.only(top: 12, bottom: 8),
+                      decoration: BoxDecoration(
+                        color: Colors.grey[300],
+                        borderRadius: BorderRadius.circular(2),
+                      ),
+                    ),
+                    
+                    // Header
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text(
+                            'Featured Properties',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xFF673AB7),
+                            ),
+                          ),
+                          Icon(
+                            _isCarouselExpanded
+                                ? Icons.keyboard_arrow_down
+                                : Icons.keyboard_arrow_up,
+                            color: const Color(0xFF673AB7),
+                          ),
+                        ],
+                      ),
+                    ),
+                    
+                    // Carousel Content
+                    if (_isCarouselExpanded) ...[
+                      const Expanded(
+                        child: SideCarouselWidget(),
+                      ),
+                    ] else ...[
+                      const SizedBox(height: 8),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Text(
+                          'Tap to view available rentals',
+                          style: TextStyle(
+                            color: Colors.grey[600],
+                            fontSize: 14,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ],
+                ),
               ),
             ),
           ),
