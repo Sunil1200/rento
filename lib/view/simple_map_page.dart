@@ -308,7 +308,7 @@ class _SimpleMapPageState extends State<SimpleMapPage> {
               },
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 300),
-                height: _isCarouselExpanded ? 400 : 80,
+                height: _isCarouselExpanded ? 380 : 80,
                 margin: const EdgeInsets.symmetric(horizontal: 16),
                 decoration: BoxDecoration(
                   color: Colors.white,
@@ -360,9 +360,7 @@ class _SimpleMapPageState extends State<SimpleMapPage> {
                     
                     // Carousel Content
                     if (_isCarouselExpanded) ...[
-                      const Expanded(
-                        child: SideCarouselWidget(),
-                      ),
+                      const SideCarouselWidget(),
                     ] else ...[
                       const SizedBox(height: 8),
                       Padding(

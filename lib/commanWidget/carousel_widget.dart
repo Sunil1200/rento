@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:carousel_slider/carousel_slider.dart' hide CarouselController;
+import 'package:carousel_slider/carousel_slider.dart' as cs;
 
 class CarouselWidget extends StatefulWidget {
   const CarouselWidget({super.key});
@@ -10,7 +10,7 @@ class CarouselWidget extends StatefulWidget {
 
 class _CarouselWidgetState extends State<CarouselWidget> {
   int _currentIndex = 0;
-  final CarouselController _carouselController = CarouselController();
+  final cs.CarouselSliderController _carouselController = cs.CarouselSliderController();
 
   final List<Map<String, dynamic>> _carouselItems = [
     {
@@ -51,9 +51,9 @@ class _CarouselWidgetState extends State<CarouselWidget> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        CarouselSlider(
+        cs.CarouselSlider(
           carouselController: _carouselController,
-          options: CarouselOptions(
+          options: cs.CarouselOptions(
             height: 280,
             viewportFraction: 0.85,
             enlargeCenterPage: true,
@@ -122,6 +122,7 @@ class _CarouselWidgetState extends State<CarouselWidget> {
                             padding: const EdgeInsets.all(20),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
                               children: [
                                 // Title and Rating
                                 Row(
@@ -228,10 +229,11 @@ class _CarouselWidgetState extends State<CarouselWidget> {
                                   ],
                                 ),
                                 
-                                const SizedBox(height: 8),
+                                const SizedBox(height: 6),
                                 
                                 // Features
-                                Wrap(
+                                Flexible(
+                                  child: Wrap(
                                   spacing: 8,
                                   runSpacing: 4,
                                   children: item['features'].map<Widget>((feature) {
@@ -253,6 +255,7 @@ class _CarouselWidgetState extends State<CarouselWidget> {
                                       ),
                                     );
                                   }).toList(),
+                                ),
                                 ),
                               ],
                             ),

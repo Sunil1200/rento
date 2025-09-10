@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:carousel_slider/carousel_slider.dart' hide CarouselController;
+import 'package:carousel_slider/carousel_slider.dart' as cs;
 
 class SideCarouselWidget extends StatefulWidget {
   const SideCarouselWidget({super.key});
@@ -10,7 +10,7 @@ class SideCarouselWidget extends StatefulWidget {
 
 class _SideCarouselWidgetState extends State<SideCarouselWidget> {
   int _currentIndex = 0;
-  final CarouselController _carouselController = CarouselController();
+  final cs.CarouselSliderController _carouselController = cs.CarouselSliderController();
 
   final List<Map<String, dynamic>> _carouselItems = [
     {
@@ -45,7 +45,7 @@ class _SideCarouselWidgetState extends State<SideCarouselWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 400,
+      height: 380,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: const BorderRadius.only(
@@ -75,7 +75,7 @@ class _SideCarouselWidgetState extends State<SideCarouselWidget> {
           
           // Header
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -108,10 +108,10 @@ class _SideCarouselWidgetState extends State<SideCarouselWidget> {
           
           // Carousel
           Expanded(
-            child: CarouselSlider(
+            child: cs.CarouselSlider(
               carouselController: _carouselController,
-              options: CarouselOptions(
-                height: 300,
+              options: cs.CarouselOptions(
+                height: 240,
                 viewportFraction: 0.9,
                 enlargeCenterPage: true,
                 enlargeFactor: 0.1,
@@ -203,12 +203,13 @@ class _SideCarouselWidgetState extends State<SideCarouselWidget> {
                               flex: 2,
                               child: Container(
                                 width: double.infinity,
-                                padding: const EdgeInsets.all(16),
+                                padding: const EdgeInsets.all(12),
                                 decoration: const BoxDecoration(
                                   color: Colors.white,
                                 ),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisSize: MainAxisSize.min,
                                   children: [
                                     // Title and Price
                                     Row(
@@ -258,7 +259,7 @@ class _SideCarouselWidgetState extends State<SideCarouselWidget> {
                                       ],
                                     ),
                                     
-                                    const SizedBox(height: 8),
+                                    const SizedBox(height: 6),
                                     
                                     // Description
                                     Text(
@@ -271,10 +272,11 @@ class _SideCarouselWidgetState extends State<SideCarouselWidget> {
                                       overflow: TextOverflow.ellipsis,
                                     ),
                                     
-                                    const SizedBox(height: 8),
+                                    const SizedBox(height: 4),
                                     
                                     // Features
-                                    Wrap(
+                                    Flexible(
+                                      child: Wrap(
                                       spacing: 6,
                                       runSpacing: 4,
                                       children: item['features'].take(2).map<Widget>((feature) {
@@ -298,6 +300,7 @@ class _SideCarouselWidgetState extends State<SideCarouselWidget> {
                                         );
                                       }).toList(),
                                     ),
+                                    ),
                                   ],
                                 ),
                               ),
@@ -314,7 +317,7 @@ class _SideCarouselWidgetState extends State<SideCarouselWidget> {
           
           // Dots Indicator
           Padding(
-            padding: const EdgeInsets.only(bottom: 16),
+            padding: const EdgeInsets.only(bottom: 12),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: _carouselItems.asMap().entries.map((entry) {
